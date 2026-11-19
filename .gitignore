@@ -1,0 +1,29 @@
+# Zig build artifacts
+.zig-cache/
+zig-cache/
+zig-out/
+*.o
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Dependencies (if using a package manager that creates a vendor dir)
+# For Zig, this might be handled by zig-cache, but good to include if you
+# manually manage dependencies in a separate folder.
+# vendor/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+*.zpack
