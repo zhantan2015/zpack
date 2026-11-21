@@ -2,6 +2,7 @@
 .zig-cache/
 zig-cache/
 zig-out/
+zig-pkg/
 *.o
 *.exe
 *.dll
@@ -27,3 +28,4 @@ Thumbs.db
 *.tmp
 
 *.zpack
+t.zig
