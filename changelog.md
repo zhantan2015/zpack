@@ -7,6 +7,36 @@
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-23
+
+新增 LZ77 压缩算法，与 RLE 算法并存，通过 `-a lz77` 显式选择。
+
+### Added
+
+- **Codec**：新增 LZ77 编码 `lz77CodecGetCrc`，基于滑动窗口的字节级匹配
+- **Codec**：新增 LZ77 解码 `lz77DecodeGetCrc`，支持重叠复制（RLE 退化）与跨缓冲边界的历史引用
+- **CLI**：`-a <algorithm>` 新增可选值 `lz77`，缺省仍为 `rle`
+- **Tests**：为 LZ77 编解码补充 roundtrip、纯 literal、重叠复制、跨 flush 边界、CRC 一致性、非法 offset 拒绝等用例
+
+### Changed
+
+- **CLI**：`-a <algorithm>` 的合法值集合扩展为 `{rle, lz77}`
+- **Container**：`.zpack` 文件头新增算法标识，解码端据此选择解码器（见下方兼容性说明）
+
+### Compatibility
+
+- **向后兼容**：v1.0.0 生成的 `.zpack` 文件（RLE 编码）仍可被 v1.1.0 解码
+- **向前不兼容**：v1.1.0 生成的 LZ77 编码文件无法被 v1.0.0 解码，会返回 `UnsupportedVersion`
+
+### Known Limitations
+
+- LZ77 编码器当前使用固定窗口（255 字节），未做最优匹配搜索
+- 对高熵数据（随机/加密内容）LZ77 可能产生 1.5–2 倍膨胀
+- RLE 对不可压缩数据的 2 倍膨胀问题未在本次改动中处理
+- 解压路径的 fuzz 测试仍未补充
+
+[1.1.0]: https://github.com/zhantan2015/zpack/releases/tag/v1.1.0
+
 ### Planned
 
 - 支持更多压缩算法（Huffman、LZ77）
@@ -62,4 +92,3 @@
 
 [Unreleased]: https://github.com/zhantan2015/zpack/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/zhantan2015/zpack/releases/tag/v1.0.0
-

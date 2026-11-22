@@ -12,7 +12,6 @@ pub fn rleCodecGetCrc(reader: *Reader, writer: *Writer) !u32 {
             };
             continue;
         }
-        hasher.update(bytes);
         var count: u8 = 0;
         var current_byte: u8 = undefined;
         for (bytes) |b| {
@@ -32,6 +31,7 @@ pub fn rleCodecGetCrc(reader: *Reader, writer: *Writer) !u32 {
         }
         try writer.writeByte(count);
         try writer.writeByte(current_byte);
+        hasher.update(bytes);
         reader.toss(bytes.len);
     }
     return hasher.final();

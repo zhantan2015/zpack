@@ -35,6 +35,9 @@ pub fn compress(io: std.Io, gpa: std.mem.Allocator, cmd_info: CmdInfo) !void {
         .rle => {
             crc = try codec.rleCodecGetCrc(reader, writer);
         },
+        .lz77 => {
+            crc = try codec.lz77CodecGetCrc(reader, writer);
+        },
         // else => {
         //     return error.UnsupportedAlgorithm;
         // },

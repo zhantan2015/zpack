@@ -2,6 +2,7 @@ const std = @import("std");
 
 pub const Algorithm = enum(u8) {
     rle = 0,
+    lz77 = 1,
     // ... 可以添加更多算法
 };
 
@@ -28,7 +29,7 @@ pub const CmdInfo = struct {
     option: u8,
     input: []const u8,
     output: ?[]const u8 = null,
-    algorithm: Algorithm = .rle,
+    algorithm: Algorithm = .lz77,
 };
 
 pub const CmdParseState = enum {

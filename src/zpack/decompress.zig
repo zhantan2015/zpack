@@ -33,6 +33,9 @@ pub fn decompress(io: std.Io, gpa: std.mem.Allocator, cmd_info: CmdInfo) !void {
         .rle => {
             hashed_crc = try decode.rleDecodeGetCrc(reader, writer, original_size);
         },
+        .lz77 => {
+            hashed_crc = try decode.lz77DecodeGetCrc(reader, writer, original_size);
+        },
     }
     if (hashed_crc) |crc| {
         const read_crc = try reader.takeInt(u32, .little);
